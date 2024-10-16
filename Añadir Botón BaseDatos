@@ -1,0 +1,31 @@
+Si quisieseis añadir un botón para consultar la Base de datos solo faltaría añadir el botón y este código
+
+// Función para consultar la BD
+private void btnConsulta_Click(object sender, EventArgs e)
+{
+    string username = label2.Text.Trim();
+
+    if (string.IsNullOrEmpty(username))
+    {
+        MessageBox.Show("Por favor, ingresa un nombre de usuario para consultar.");
+        return;
+    }
+
+    // Enviar petición de consulta al servidor
+    string request = $"3/{username}";
+    SendRequest(request);
+
+    // Recibir respuesta del servidor
+    string serverResponse = ReceiveResponse();
+    if (string.IsNullOrEmpty(serverResponse)) return;
+
+    if (serverResponse.Contains("Nombre"))
+    {
+        // Mostrar la información del usuario recibida del servidor
+        MessageBox.Show($"Información del usuario: {serverResponse}");
+    }
+    else
+    {
+        MessageBox.Show("No se encontró información para el usuario proporcionado.");
+    }
+}
